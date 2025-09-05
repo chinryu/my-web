@@ -5,22 +5,237 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>プロフィール - あなたの名前</title>
     <meta name="description" content="あなたのプロフィールページ">
+    <meta name="theme-color" content="#0ea5e9">
+    <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="styles.css">
+    <style>
+      :root {
+        --bg: #0b1020;
+        --bg-elevated: rgba(255, 255, 255, 0.06);
+        --text: #e6e7ea;
+        --text-muted: #a6a8ad;
+        --primary-500: #0ea5e9;
+        --primary-400: #38bdf8;
+        --ring: rgba(14, 165, 233, 0.4);
+        --card-border: rgba(255, 255, 255, 0.12);
+        --shadow: 0 10px 30px rgba(2, 6, 23, 0.35);
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f6f7fb;
+          --bg-elevated: rgba(255, 255, 255, 0.7);
+          --text: #0f172a;
+          --text-muted: #475569;
+          --card-border: rgba(15, 23, 42, 0.08);
+          --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+        }
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        color: var(--text);
+        background: radial-gradient(1200px 800px at 10% -10%, rgba(56, 189, 248, 0.15), transparent 40%),
+                    radial-gradient(1000px 700px at 110% 10%, rgba(14, 165, 233, 0.18), transparent 40%),
+                    var(--bg);
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "メイリオ", Meiryo, sans-serif;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px 80px;
+      }
+
+      /* Hero */
+      .profile {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 24px;
+        align-items: center;
+        padding: 28px;
+        border: 1px solid var(--card-border);
+        background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+        backdrop-filter: saturate(120%) blur(8px);
+        animation: fadeUp 600ms ease 30ms both;
+      }
+
+      .avatar-wrapper {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        border-radius: 9999px;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(60% 60% at 40% 30%, rgba(56,189,248,0.35), rgba(56,189,248,0) 70%), rgba(255,255,255,0.04);
+        border: 1px solid var(--card-border);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), var(--shadow);
+      }
+
+      .avatar-wrapper::after {
+        content: "";
+        position: absolute;
+        inset: -6px;
+        border-radius: 9999px;
+        background: conic-gradient(from 180deg at 50% 50%, rgba(56,189,248,0.0), rgba(56,189,248,0.55), rgba(14,165,233,0.0));
+        filter: blur(14px);
+        opacity: 0.6;
+        z-index: -1;
+      }
+
+      .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 9999px;
+        object-fit: cover;
+        border: 2px solid var(--ring);
+        box-shadow: 0 6px 18px rgba(14,165,233,0.35);
+      }
+
+      .headline {
+        display: grid;
+        gap: 10px;
+      }
+
+      .name {
+        margin: 0;
+        font-size: clamp(26px, 4vw, 38px);
+        letter-spacing: 0.2px;
+      }
+
+      .role {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 16px;
+      }
+
+      .cta {
+        display: flex;
+        gap: 12px;
+        margin-top: 8px;
+        flex-wrap: wrap;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--card-border);
+        color: var(--text);
+        text-decoration: none;
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        transition: transform 160ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+        box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+      }
+      .button:hover {
+        transform: translateY(-2px);
+        border-color: rgba(56,189,248,0.45);
+        box-shadow: 0 10px 26px rgba(2,6,23,0.22);
+        background: linear-gradient(180deg, rgba(56,189,248,0.08), rgba(56,189,248,0.02));
+      }
+
+      .button.primary {
+        background: linear-gradient(135deg, var(--primary-500), var(--primary-400));
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 10px 26px rgba(14,165,233,0.35);
+      }
+      .button.primary:hover { filter: brightness(1.05); }
+
+      .social-links {
+        display: flex;
+        gap: 10px;
+        margin: 10px 0 0;
+        padding: 0;
+        list-style: none;
+        flex-wrap: wrap;
+      }
+
+      /* Sections */
+      .section {
+        margin-top: 36px;
+        padding: 26px;
+        border: 1px solid var(--card-border);
+        background: var(--bg-elevated);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(6px);
+        animation: fadeUp 650ms ease 60ms both;
+      }
+      .section h2 { margin: 0 0 12px; font-size: 20px; }
+      .section p { margin: 0; color: var(--text-muted); }
+
+      /* Tags */
+      .tags { display: flex; gap: 10px; margin: 0; padding: 0; list-style: none; flex-wrap: wrap; }
+      .tags li {
+        padding: 8px 12px;
+        border-radius: 9999px;
+        border: 1px solid var(--card-border);
+        background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+        font-size: 14px;
+        color: var(--text);
+      }
+
+      /* Cards */
+      .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+      .card {
+        padding: 18px;
+        border: 1px solid var(--card-border);
+        border-radius: 14px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+        box-shadow: var(--shadow);
+        transition: transform 180ms ease, border-color 200ms ease, box-shadow 200ms ease;
+        min-height: 140px;
+      }
+      .card:hover { transform: translateY(-3px); border-color: rgba(56,189,248,0.35); box-shadow: 0 16px 34px rgba(2,6,23,0.28); }
+      .card h3 { margin: 0 0 6px; font-size: 18px; }
+      .card p { margin: 0 0 10px; color: var(--text-muted); }
+      .link { color: var(--primary-400); text-decoration: none; }
+      .link:hover { text-decoration: underline; }
+
+      /* Footer */
+      .footer { text-align: center; margin-top: 36px; color: var(--text-muted); }
+
+      /* Keyframes */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Responsive */
+      @media (max-width: 640px) {
+        .profile { grid-template-columns: 1fr; text-align: center; }
+        .avatar-wrapper { margin: 0 auto; }
+        .cta { justify-content: center; }
+        .social-links { justify-content: center; }
+      }
+    </style>
   </head>
   <body>
     <main class="container">
-      <header class="profile">
-        <div class="avatar-wrapper">
+      <header class="profile" aria-label="プロフィール ヒーロー">
+        <div class="avatar-wrapper" aria-hidden="true">
           <img class="avatar" src="https://placehold.co/200x200/png" alt="プロフィール画像">
         </div>
         <div class="headline">
           <h1 class="name">あなたの名前</h1>
           <p class="role">ソフトウェアエンジニア / Webエンジニア</p>
+          <div class="cta">
+            <a class="button primary" href="#projects" aria-label="プロジェクトを見る">プロジェクトを見る</a>
+            <a class="button" href="mailto:you@example.com" target="_blank" rel="noopener noreferrer" aria-label="メールで連絡">メールで連絡</a>
+          </div>
           <ul class="social-links" aria-label="ソーシャルリンク">
-            <li><a class="button" href="mailto:you@example.com" target="_blank" rel="noopener noreferrer">メール</a></li>
-            <li><a class="button" href="https://github.com/yourname" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-            <li><a class="button" href="https://x.com/yourname" target="_blank" rel="noopener noreferrer">X</a></li>
-            <li><a class="button" href="https://www.linkedin.com/in/yourname" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a class="button" href="https://github.com/yourname" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a></li>
+            <li><a class="button" href="https://x.com/yourname" target="_blank" rel="noopener noreferrer" aria-label="X">X</a></li>
+            <li><a class="button" href="https://www.linkedin.com/in/yourname" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a></li>
           </ul>
         </div>
       </header>
@@ -34,8 +249,8 @@
         </p>
       </section>
 
-      <section class="section">
-        <h2>スキル</h2>
+      <section class="section" aria-labelledby="skills">
+        <h2 id="skills">スキル</h2>
         <ul class="tags">
           <li>TypeScript</li>
           <li>React</li>
@@ -46,18 +261,23 @@
         </ul>
       </section>
 
-      <section class="section">
-        <h2>プロジェクト</h2>
+      <section class="section" id="projects" aria-labelledby="projects-title">
+        <h2 id="projects-title">プロジェクト</h2>
         <div class="cards">
-          <article class="card">
+          <article class="card" aria-label="プロジェクトA">
             <h3>プロジェクト A</h3>
             <p>ユーザーの課題を解決するための Web アプリ。React と API を用いて構築。</p>
             <a class="link" href="#" aria-label="プロジェクトAの詳細">詳細を見る →</a>
           </article>
-          <article class="card">
+          <article class="card" aria-label="プロジェクトB">
             <h3>プロジェクト B</h3>
             <p>パフォーマンスを重視した SSR 構成。アクセシビリティと SEO を考慮して実装。</p>
             <a class="link" href="#" aria-label="プロジェクトBの詳細">詳細を見る →</a>
+          </article>
+          <article class="card" aria-label="プロジェクトC">
+            <h3>プロジェクト C</h3>
+            <p>デザインシステムの策定と UI コンポーネントの再利用化をリード。</p>
+            <a class="link" href="#" aria-label="プロジェクトCの詳細">詳細を見る →</a>
           </article>
         </div>
       </section>
