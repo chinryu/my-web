@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>プロフィール - あなたの名前</title>
+    <meta name="description" content="あなたのプロフィールページ">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="container">
+      <header class="profile">
+        <div class="avatar-wrapper">
+          <img class="avatar" src="https://placehold.co/200x200/png" alt="プロフィール画像">
+        </div>
+        <div class="headline">
+          <h1 class="name">あなたの名前</h1>
+          <p class="role">ソフトウェアエンジニア / Webエンジニア</p>
+          <ul class="social-links" aria-label="ソーシャルリンク">
+            <li><a class="button" href="mailto:you@example.com" target="_blank" rel="noopener noreferrer">メール</a></li>
+            <li><a class="button" href="https://github.com/yourname" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a class="button" href="https://x.com/yourname" target="_blank" rel="noopener noreferrer">X</a></li>
+            <li><a class="button" href="https://www.linkedin.com/in/yourname" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          </ul>
+        </div>
+      </header>
+
+      <section class="section">
+        <h2>自己紹介</h2>
+        <p>
+          東京在住のソフトウェアエンジニアです。フロントエンドからバックエンドまで幅広く開発し、
+          TypeScript / React / Node.js を中心に日々プロダクトづくりに取り組んでいます。
+          ユーザー体験を第一に、読みやすく保守しやすいコードを書くことを大切にしています。
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>スキル</h2>
+        <ul class="tags">
+          <li>TypeScript</li>
+          <li>React</li>
+          <li>Next.js</li>
+          <li>Node.js</li>
+          <li>HTML/CSS</li>
+          <li>AWS</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>プロジェクト</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>プロジェクト A</h3>
+            <p>ユーザーの課題を解決するための Web アプリ。React と API を用いて構築。</p>
+            <a class="link" href="#" aria-label="プロジェクトAの詳細">詳細を見る →</a>
+          </article>
+          <article class="card">
+            <h3>プロジェクト B</h3>
+            <p>パフォーマンスを重視した SSR 構成。アクセシビリティと SEO を考慮して実装。</p>
+            <a class="link" href="#" aria-label="プロジェクトBの詳細">詳細を見る →</a>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>© <span id="year"></span> あなたの名前</p>
+      </footer>
+    </main>
+
+    <script>
+      // 年の自動更新
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+  </html>
+
+
